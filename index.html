@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Network Threat Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4"
+  >
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-extrabold text-gray-900 mb-4">
+        Network Threat Predictor
+      </h1>
+      <p class="text-lg text-gray-600 max-w-xl mx-auto">
+        Analyze network traffic and URL patterns in real-time using AI. Quickly
+        detect if a given session is malicious or benign.
+      </p>
+    </header>
+
+    <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+      <a
+        href="/predict"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg shadow transition"
+      >
+        Launch Predictor Tool
+      </a>
+      <a
+        href="/docs"
+        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-lg shadow transition"
+      >
+        View API Docs
+      </a>
+      <a
+        href="https://github.com/pranavkhaspa/Network-Traffic-Predictor.git"
+        target="_blank"
+        class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg text-lg shadow transition"
+      >
+        View on GitHub
+      </a>
+    </div>
+
+    <footer class="absolute bottom-4 text-gray-400 text-sm">
+      &copy; 2025 Network AI Lab. All rights reserved.
+    </footer>
+  </body>
+</html>

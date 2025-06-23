@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Network Traffic Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f9fafb;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <main class="w-full max-w-5xl bg-white rounded-2xl shadow-xl p-8">
+      <header class="text-center mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-3">
+          Network Traffic Predictor
+        </h1>
+        <p class="text-gray-500 text-lg">
+          Enter network session details to predict if the traffic is
+          <span class="font-semibold">Malicious</span> or
+          <span class="font-semibold">Benign</span>.
+        </p>
+      </header>
+
+      <form
+        id="predictionForm"
+        class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm"
+      >
+        <!-- Numerical Inputs -->
+        <section class="md:col-span-2">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Numerical Features
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label class="block mb-1 font-medium">Sender ID</label>
+              <input
+                type="number"
+                id="senderId"
+                name="sender_id"
+                value="101"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Receiver ID</label>
+              <input
+                type="number"
+                id="receiverId"
+                name="receiver_id"
+                value="202"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Source Port</label>
+              <input
+                type="number"
+                id="sourcePort"
+                name="source_port"
+                value="8080"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Destination Port</label>
+              <input
+                type="number"
+                id="destinationPort"
+                name="destination_port"
+                value="443"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Packet Size</label>
+              <input
+                type="number"
+                id="packetSize"
+                name="packet_size"
+                value="1500"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Categorical Inputs -->
+        <section class="md:col-span-2 mt-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Categorical Features
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label class="block mb-1 font-medium">Protocol</label>
+              <select
+                id="protocol"
+                name="protocol"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              >
+                <option value="TCP">TCP</option>
+                <option value="UDP">UDP</option>
+                <option value="ICMP">ICMP</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Flag</label>
+              <select
+                id="flag"
+                name="flag"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              >
+                <option value="SYN">SYN</option>
+                <option value="ACK">ACK</option>
+                <option value="PSH">PSH</option>
+                <option value="FIN">FIN</option>
+                <option value="RST">RST</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Packet Type</label>
+              <input
+                type="text"
+                id="packet"
+                name="packet"
+                value="Data"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Source IP Address</label>
+              <input
+                type="text"
+                id="sourceIp"
+                name="source_ip_address"
+                value="192.168.1.1"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label class="block mb-1 font-medium"
+                >Destination IP Address</label
+              >
+              <input
+                type="text"
+                id="destinationIp"
+                name="destination_ip_address"
+                value="8.8.8.8"
+                required
+                class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- URL Feature -->
+        <section class="md:col-span-2 mt-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">URL Feature</h2>
+          <div>
+            <label class="block mb-1 font-medium">URL</label>
+            <input
+              type="text"
+              id="url"
+              name="url"
+              value="https://www.example.com/safe-page"
+              required
+              placeholder="e.g. https://malicious.link/phishing"
+              class="w-full border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+            />
+          </div>
+        </section>
+
+        <!-- Buttons -->
+        <div
+          class="md:col-span-2 mt-8 flex flex-wrap justify-center gap-4 text-sm font-semibold"
+        >
+          <button
+            type="button"
+            id="populateBenignButton"
+            class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition"
+          >
+            Populate Benign
+          </button>
+          <button
+            type="button"
+            id="populateMaliciousButton"
+            class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition"
+          >
+            Populate Malicious
+          </button>
+          <button
+            type="submit"
+            id="predictButton"
+            class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg text-base transition"
+          >
+            Predict Traffic Type
+          </button>
+        </div>
+      </form>
+
+      <!-- Result -->
+      <section
+        id="resultSection"
+        class="mt-10 hidden border-t pt-6 text-center space-y-2"
+      >
+        <h2 class="text-2xl font-bold text-gray-900">Prediction Result</h2>
+        <p
+          id="predictionResult"
+          class="text-lg text-gray-800 font-semibold"
+        ></p>
+        <p id="confidenceScore" class="text-gray-500"></p>
+      </section>
+
+      <!-- Loading -->
+      <div
+        id="loadingIndicator"
+        class="hidden mt-8 text-center text-blue-600 font-medium"
+      >
+        Predicting...
+      </div>
+
+      <!-- Error -->
+      <div
+        id="errorMessage"
+        class="hidden mt-8 text-center text-red-500 font-medium"
+      ></div>
+    </main>
+
+    <script>
+      const predictionForm = document.getElementById("predictionForm");
+      const predictButton = document.getElementById("predictButton");
+      const resultSection = document.getElementById("resultSection");
+      const predictionResult = document.getElementById("predictionResult");
+      const confidenceScore = document.getElementById("confidenceScore");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const errorMessage = document.getElementById("errorMessage");
+
+      const benignData = {
+        sender_id: 101,
+        receiver_id: 202,
+        source_port: 8080,
+        destination_port: 443,
+        packet_size: 1500,
+        protocol: "TCP",
+        flag: "ACK",
+        packet: "Data",
+        source_ip_address: "192.168.1.1",
+        destination_ip_address: "8.8.8.8",
+        url: "https://www.google.com/search?q=safe+website",
+      };
+
+      const maliciousData = {
+        sender_id: 123456,
+        receiver_id: 987654,
+        source_port: 53,
+        destination_port: 80,
+        packet_size: 64,
+        protocol: "TCP",
+        flag: "SYN",
+        packet: "HTTP",
+        source_ip_address: "192.168.0.1",
+        destination_ip_address: "10.0.0.5",
+        url: "https://malicious.bad/phishing",
+      };
+
+      function populateForm(data) {
+        Object.entries(data).forEach(([key, value]) => {
+          const field = document.querySelector(`[name="${key}"]`);
+          if (field) field.value = value;
+        });
+      }
+
+      document
+        .getElementById("populateBenignButton")
+        .addEventListener("click", () => populateForm(benignData));
+      document
+        .getElementById("populateMaliciousButton")
+        .addEventListener("click", () => populateForm(maliciousData));
+
+      predictionForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        resultSection.classList.add("hidden");
+        errorMessage.classList.add("hidden");
+        loadingIndicator.classList.remove("hidden");
+        predictButton.disabled = true;
+
+        const formData = new FormData(predictionForm);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+          data[key] = [
+            "sender_id",
+            "receiver_id",
+            "source_port",
+            "destination_port",
+            "packet_size",
+          ].includes(key)
+            ? parseFloat(value)
+            : value;
+        }
+
+        try {
+          const response = await fetch("/predict", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            predictionResult.textContent = `Prediction: ${result.prediction}`;
+            confidenceScore.textContent = `Confidence: ${(
+              result.confidence * 100
+            ).toFixed(2)}%`;
+            resultSection.classList.remove("hidden");
+          } else {
+            errorMessage.textContent = `Error: ${
+              result.error || "Something went wrong!"
+            }`;
+            errorMessage.classList.remove("hidden");
+          }
+        } catch (error) {
+          errorMessage.textContent = `Network error: ${error.message}`;
+          errorMessage.classList.remove("hidden");
+        } finally {
+          loadingIndicator.classList.add("hidden");
+          predictButton.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
