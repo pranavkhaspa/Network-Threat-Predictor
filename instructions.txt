@@ -1,0 +1,8 @@
+create a venv with version 10
+Activate the virtual environment
+
+
+
+python3.10 -m venv myenv
+source myenv/bin/activate
+
